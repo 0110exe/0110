@@ -1827,7 +1827,7 @@ if game.PlaceId == 2788229376 then
         Title_3.Position = UDim2.new(0.123752303, 0, 0.0177514795, 0)
         Title_3.Size = UDim2.new(0, 153, 0, 21)
         Title_3.Font = Enum.Font.Code
-        Title_3.Text = "Bedrock's Controll v1"
+        Title_3.Text = "Kay's GUI V1"
         Title_3.TextColor3 = Color3.fromRGB(220, 220, 220)
         Title_3.TextSize = 14.000
         Title_3.TextWrapped = true
