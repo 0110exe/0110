@@ -616,7 +616,7 @@ if game.PlaceId == 2788229376 then
                             end
                         end
 
-                        if finalMsg == getgenv().prefix .. "drop" then
+                        if finalMsg == getgenv().prefix .. ".drop" then
 
                             if getgenv().isDropping == false then
 
@@ -670,7 +670,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "drop " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".drop " .. plr.Name:lower() then
 
                             if getgenv().isDropping == false then
 
@@ -724,7 +724,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "advert" then
+                        if finalMsg == getgenv().prefix .. ".advert" then
                             
 
                             if getgenv().adverting == false then
@@ -777,7 +777,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "vibe" then
+                        if finalMsg == getgenv().prefix .. ".vibe" then
 
                             game:GetService("Players"):Chat("/e dance2")
 
@@ -803,7 +803,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "wallet" then
+                        if finalMsg == getgenv().prefix .. ".wallet" then
                             for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
                                 if v.name == "/Wallet" then
                                     v.Parent = game.Players.LocalPlayer.Character
@@ -818,7 +818,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "setspot " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".setspot " .. plr.Name:lower() then
                             local args = {
                                 [1] = "Set spot successfully!",
                                 [2] = "All"
@@ -840,7 +840,7 @@ if game.PlaceId == 2788229376 then
                             getgenv().poss = plrrlrllr.Character.HumanoidRootPart.Position
 
                         end
-                        if finalMsg == getgenv().prefix .. "setspot" then
+                        if finalMsg == getgenv().prefix .. ".setspot" then
                             local args = {
                                 [1] = "Set spot successfully!",
                                 [2] = "All"
@@ -863,7 +863,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "money? " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".money " .. plr.Name:lower() then
 
                             local args = {
                                 [1] = "I have " ..
@@ -876,7 +876,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "money?" then
+                        if finalMsg == getgenv().prefix .. ".money" then
 
                             local args = {
                                 [1] = "I have " ..
@@ -888,7 +888,7 @@ if game.PlaceId == 2788229376 then
                                 unpack(args))
 
                         end
-                        if finalMsg == getgenv().prefix .. "tospot " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".tospot " .. plr.Name:lower() then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             game:service 'Players'.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
@@ -897,7 +897,7 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. "tospot" then
+                        if finalMsg == getgenv().prefix .. ".tospot" then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             game:service 'Players'.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
@@ -906,13 +906,13 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. "unfly" then
+                        if finalMsg == getgenv().prefix .. ".unfly" then
                             endFly()
                         end
-                        if finalMsg == getgenv().prefix .. "unfly " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".unfly " .. plr.Name:lower() then
                             endFly()
                         end
-                        if finalMsg == getgenv().prefix .. "airlock " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".airlock " .. plr.Name:lower() then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             local player = game.Players.LocalPlayer
                             local character = player.Character
@@ -925,7 +925,7 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. "airlock" then
+                        if finalMsg == getgenv().prefix .. ".airlock" then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             local player = game.Players.LocalPlayer
                             local character = player.Character
@@ -938,7 +938,7 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. "kill" then
+                        if finalMsg == getgenv().prefix .. ".kill" then
                             humanoid.Health = 0
                         end
 
@@ -961,18 +961,18 @@ if game.PlaceId == 2788229376 then
                                                .Abuse)
                         end
 
-                        if finalMsg == getgenv().prefix .. "kill " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".kill " .. plr.Name:lower() then
                             humanoid.Health = 0
                         end
 
-                        if finalMsg == getgenv().prefix .. "kick" then
+                        if finalMsg == getgenv().prefix .. ".kick" then
                             plr:Kick("You've been kicked by the Controller.")
                         end
-                        if finalMsg == getgenv().prefix .. "kick " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".kick " .. plr.Name:lower() then
                             plr:Kick("You've been kicked by the Controller.")
                         end
 
-                        if finalMsg == getgenv().prefix .. "bringalts" then
+                        if finalMsg == getgenv().prefix .. ".bringalts" then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             PlayerHumanoid.RootPart.CFrame = LastTargetPosition + LastTargetPosition.LookVector * Length
                             PlayerHumanoid.RootPart.CFrame =
@@ -981,7 +981,7 @@ if game.PlaceId == 2788229376 then
                                     LastTargetPosition.Position.Z))
                         end
 
-                        if finalMsg == getgenv().prefix .. "bring " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".bring " .. plr.Name:lower() then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             PlayerHumanoid.RootPart.CFrame = LastTargetPosition + LastTargetPosition.LookVector * Length
                             PlayerHumanoid.RootPart.CFrame =
@@ -990,23 +990,23 @@ if game.PlaceId == 2788229376 then
                                     LastTargetPosition.Position.Z))
                         end
 
-                        if finalMsg == getgenv().prefix .. "freeze" then
+                        if finalMsg == getgenv().prefix .. ".freeze" then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "freeze " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".freeze " .. plr.Name:lower() then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. "unfreeze" then
+                        if finalMsg == getgenv().prefix .. ".unfreeze" then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
 
                         end
-                        if finalMsg == getgenv().prefix .. "unfreeze " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. ".unfreeze " .. plr.Name:lower() then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
 
