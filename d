@@ -118,7 +118,7 @@ if game.PlaceId == 2788229376 then
     end)
     Players.PlayerAdded:Connect(function(player)
         game.StarterGui:SetCore("SendNotification", {
-            Title = "Hm.. It seems like someone joined!",
+            Title = "Another User Is Here!",
             Text = player.name .. " joined the game.",
             Duration = 5
         })
@@ -148,7 +148,7 @@ if game.PlaceId == 2788229376 then
                             startFly()
 
                         end
-                        if finalMsg == getgenv().prefix .. "/setup admin" then
+                        if finalMsg == getgenv().prefix .. "setup admin" then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             for i, v in pairs(getgenv().alts) do
                                 if i == "Alt1" then
@@ -382,7 +382,7 @@ if game.PlaceId == 2788229376 then
                             end
                         end
 
-                        if finalMsg == getgenv().prefix .. "setup bank" then
+                        if finalMsg == getgenv().prefix .. "/setup bank" then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             for i, v in pairs(getgenv().alts) do
                                 if i == "Alt1" then
@@ -616,7 +616,7 @@ if game.PlaceId == 2788229376 then
                             end
                         end
 
-                        if finalMsg == getgenv().prefix .. ".drop" then
+                        if finalMsg == getgenv().prefix .. "/drop" then
 
                             if getgenv().isDropping == false then
 
@@ -625,61 +625,7 @@ if game.PlaceId == 2788229376 then
                                 if getgenv().isDropping == true then
                                     game:GetService("VirtualInputManager"):SendKeyEvent(true, 102, false, yomama)
                                     local args = {
-                                        [1] = "Started Dropping!",
-                                        [2] = "All"
-                                    }
-
-                                    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                                        unpack(args))
-                                end
-                                while getgenv().isDropping == true do
-
-                                    if game:GetService("Players").LocalPlayer.DataFolder.Currency.Value < 10000 then
-                                        local args = {
-                                            [1] = "Hmm... It seems ive become broke!",
-                                            [2] = "All"
-                                        }
-
-                                        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents
-                                            .SayMessageRequest:FireServer(unpack(args))
-                                    end
-
-                                    local args = {
-                                        [1] = "DropMoney",
-                                        [2] = "10000"
-                                    }
-
-                                    game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
-                                    wait(15)
-                                end
-                            else
-
-                                getgenv().isDropping = false
-                                if getgenv().isDropping == false then
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(false, 102, false, yomama)
-                                    local args = {
-                                        [1] = "Stopping drop!",
-                                        [2] = "All"
-                                    }
-
-                                    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
-                                        unpack(args))
-                                end
-
-                            end
-
-                        end
-
-                        if finalMsg == getgenv().prefix .. ".drop " .. plr.Name:lower() then
-
-                            if getgenv().isDropping == false then
-
-                                getgenv().isDropping = true
-
-                                if getgenv().isDropping == true then
-                                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 102, false, yomama)
-                                    local args = {
-                                        [1] = "Starting Drop!",
+                                        [1] = "Drop Started!",
                                         [2] = "All"
                                     }
 
@@ -712,7 +658,7 @@ if game.PlaceId == 2788229376 then
                                 if getgenv().isDropping == false then
                                     game:GetService("VirtualInputManager"):SendKeyEvent(false, 102, false, yomama)
                                     local args = {
-                                        [1] = "Stopping drop!",
+                                        [1] = "Drop Stopped!",
                                         [2] = "All"
                                     }
 
@@ -724,7 +670,61 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. ".advert" then
+                        if finalMsg == getgenv().prefix .. "/drop" .. plr.Name:lower() then
+
+                            if getgenv().isDropping == false then
+
+                                getgenv().isDropping = true
+
+                                if getgenv().isDropping == true then
+                                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 102, false, yomama)
+                                    local args = {
+                                        [1] = "Drop Started!",
+                                        [2] = "All"
+                                    }
+
+                                    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                        unpack(args))
+                                end
+                                while getgenv().isDropping == true do
+
+                                    if game:GetService("Players").LocalPlayer.DataFolder.Currency.Value < 10000 then
+                                        local args = {
+                                            [1] = "I'm outta cash g.",
+                                            [2] = "All"
+                                        }
+
+                                        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents
+                                            .SayMessageRequest:FireServer(unpack(args))
+                                    end
+
+                                    local args = {
+                                        [1] = "DropMoney",
+                                        [2] = "10000"
+                                    }
+
+                                    game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
+                                    wait(15)
+                                end
+                            else
+
+                                getgenv().isDropping = false
+                                if getgenv().isDropping == false then
+                                    game:GetService("VirtualInputManager"):SendKeyEvent(false, 102, false, yomama)
+                                    local args = {
+                                        [1] = "Drop Stopped!",
+                                        [2] = "All"
+                                    }
+
+                                    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                                        unpack(args))
+                                end
+
+                            end
+
+                        end
+
+                        if finalMsg == getgenv().prefix .. "/advert" then
                             
 
                             if getgenv().adverting == false then
@@ -751,7 +751,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "advert " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/advert " .. plr.Name:lower() then
 
                             if getgenv().adverting == false then
 
@@ -777,20 +777,20 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. ".vibe" then
+                        if finalMsg == getgenv().prefix .. "/vibe" then
 
                             game:GetService("Players"):Chat("/e dance2")
 
                         end
-                        if finalMsg == getgenv().prefix .. "vibe " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "vibe" .. plr.Name:lower() then
 
                             game:GetService("Players"):Chat("/e dance2")
 
                         end
 
-                        if finalMsg == getgenv().prefix .. "wallet " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/wallet" .. plr.Name:lower() then
                             for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                                if v.name == "/Wallet" then
+                                if v.name == "Wallet" then
                                     v.Parent = game.Players.LocalPlayer.Character
                                 else
                                     local localPlayer = game.Players.LocalPlayer
@@ -803,9 +803,9 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. ".wallet" then
+                        if finalMsg == getgenv().prefix .. "/wallet" then
                             for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                                if v.name == "/Wallet" then
+                                if v.name == "Wallet" then
                                     v.Parent = game.Players.LocalPlayer.Character
                                 else
                                     local localPlayer = game.Players.LocalPlayer
@@ -818,7 +818,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. ".setspot " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/setspot" .. plr.Name:lower() then
                             local args = {
                                 [1] = "Set spot successfully!",
                                 [2] = "All"
@@ -840,7 +840,7 @@ if game.PlaceId == 2788229376 then
                             getgenv().poss = plrrlrllr.Character.HumanoidRootPart.Position
 
                         end
-                        if finalMsg == getgenv().prefix .. ".setspot" then
+                        if finalMsg == getgenv().prefix .. "/setspot" then
                             local args = {
                                 [1] = "Set spot successfully!",
                                 [2] = "All"
@@ -863,7 +863,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. ".money " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/money" .. plr.Name:lower() then
 
                             local args = {
                                 [1] = "I have " ..
@@ -876,7 +876,7 @@ if game.PlaceId == 2788229376 then
 
                         end
 
-                        if finalMsg == getgenv().prefix .. ".money" then
+                        if finalMsg == getgenv().prefix .. "/money" then
 
                             local args = {
                                 [1] = "I have " ..
@@ -888,7 +888,7 @@ if game.PlaceId == 2788229376 then
                                 unpack(args))
 
                         end
-                        if finalMsg == getgenv().prefix .. ".tospot " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/tospot" .. plr.Name:lower() then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             game:service 'Players'.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
@@ -897,7 +897,7 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. ".tospot" then
+                        if finalMsg == getgenv().prefix .. "/tospot" then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             game:service 'Players'.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
@@ -906,13 +906,13 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. ".unfly" then
+                        if finalMsg == getgenv().prefix .. "/unfly" then
                             endFly()
                         end
-                        if finalMsg == getgenv().prefix .. ".unfly " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/unfly" .. plr.Name:lower() then
                             endFly()
                         end
-                        if finalMsg == getgenv().prefix .. ".airlock " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/airlock" .. plr.Name:lower() then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             local player = game.Players.LocalPlayer
                             local character = player.Character
@@ -925,7 +925,7 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. ".airlock" then
+                        if finalMsg == getgenv().prefix .. "/airlock" then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             local player = game.Players.LocalPlayer
                             local character = player.Character
@@ -938,11 +938,11 @@ if game.PlaceId == 2788229376 then
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. ".kill" then
+                        if finalMsg == getgenv().prefix .. "/kill" then
                             humanoid.Health = 0
                         end
 
-                        if finalMsg == getgenv().prefix .. "crash" then
+                        if finalMsg == getgenv().prefix .. "/crash" then
                             loadstring(game:HttpGet(
                                 'https://raw.githubusercontent.com/lerkermer/lua-projects/master/SuperCustomServerCrasher'))()
                             wait(2)
@@ -961,18 +961,18 @@ if game.PlaceId == 2788229376 then
                                                .Abuse)
                         end
 
-                        if finalMsg == getgenv().prefix .. ".kill " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/kill" .. plr.Name:lower() then
                             humanoid.Health = 0
                         end
 
-                        if finalMsg == getgenv().prefix .. ".kick" then
+                        if finalMsg == getgenv().prefix .. "/kick" then
                             plr:Kick("You've been kicked by the Controller.")
                         end
-                        if finalMsg == getgenv().prefix .. ".kick " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/kick " .. plr.Name:lower() then
                             plr:Kick("You've been kicked by the Controller.")
                         end
 
-                        if finalMsg == getgenv().prefix .. ".bringalts" then
+                        if finalMsg == getgenv().prefix .. "/bringalts" then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             PlayerHumanoid.RootPart.CFrame = LastTargetPosition + LastTargetPosition.LookVector * Length
                             PlayerHumanoid.RootPart.CFrame =
@@ -981,7 +981,7 @@ if game.PlaceId == 2788229376 then
                                     LastTargetPosition.Position.Z))
                         end
 
-                        if finalMsg == getgenv().prefix .. ".bring " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/bring" .. plr.Name:lower() then
                             game.Players.LocalPlayer.Character.Head.Anchored = false
                             PlayerHumanoid.RootPart.CFrame = LastTargetPosition + LastTargetPosition.LookVector * Length
                             PlayerHumanoid.RootPart.CFrame =
@@ -990,23 +990,23 @@ if game.PlaceId == 2788229376 then
                                     LastTargetPosition.Position.Z))
                         end
 
-                        if finalMsg == getgenv().prefix .. ".freeze" then
+                        if finalMsg == getgenv().prefix .. "/freeze" then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
 
-                        if finalMsg == getgenv().prefix .. ".freeze " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/freeze" .. plr.Name:lower() then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = true
 
                         end
-                        if finalMsg == getgenv().prefix .. ".unfreeze" then
+                        if finalMsg == getgenv().prefix .. "/unfreeze" then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
 
                         end
-                        if finalMsg == getgenv().prefix .. ".unfreeze " .. plr.Name:lower() then
+                        if finalMsg == getgenv().prefix .. "/unfreeze" .. plr.Name:lower() then
 
                             game.Players.LocalPlayer.Character.Head.Anchored = false
 
@@ -1235,7 +1235,7 @@ if game.PlaceId == 2788229376 then
         Rank.TextWrapped = true
         Rank.TextXAlignment = Enum.TextXAlignment.Left
 
-        WhatsNew.Name = "new"
+        WhatsNew.Name = "Whats New?"
         WhatsNew.Parent = Home_2
         WhatsNew.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         WhatsNew.BackgroundTransparency = 1.000
@@ -1243,7 +1243,7 @@ if game.PlaceId == 2788229376 then
         WhatsNew.Position = UDim2.new(0.0177452099, 0, 0.374320924, 0)
         WhatsNew.Size = UDim2.new(0, 335, 0, 28)
         WhatsNew.Font = Enum.Font.Code
-        WhatsNew.Text = "new"
+        WhatsNew.Text = "What's new?"
         WhatsNew.TextColor3 = Color3.fromRGB(220, 220, 220)
         WhatsNew.TextSize = 26.000
         WhatsNew.TextWrapped = true
@@ -1286,8 +1286,8 @@ if game.PlaceId == 2788229376 then
         TextButton_2.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
         TextButton_2.Position = UDim2.new(0.297597051, 0, 0.221893474, 0)
         TextButton_2.Size = UDim2.new(0, 132, 0, 45)
-        TextButton_2.Font = Enum.Font.Code
-        TextButton_2.Text = "Playground"
+        TextButton_2.Font = Emum.Font.Code
+        TextButton_2.Text = "Park"
         TextButton_2.TextColor3 = Color3.fromRGB(220, 220, 220)
         TextButton_2.TextSize = 14.000
 
@@ -1320,7 +1320,7 @@ if game.PlaceId == 2788229376 then
         TextButton_5.Position = UDim2.new(0.297597051, 0, 0.396449685, 0)
         TextButton_5.Size = UDim2.new(0, 132, 0, 45)
         TextButton_5.Font = Enum.Font.Code
-        TextButton_5.Text = "School"
+        TextButton_5.Text = "Skool"
         TextButton_5.TextColor3 = Color3.fromRGB(220, 220, 220)
         TextButton_5.TextSize = 14.000
 
@@ -1331,7 +1331,7 @@ if game.PlaceId == 2788229376 then
         TextButton_6.Position = UDim2.new(0.0166358575, 0, 0.396449685, 0)
         TextButton_6.Size = UDim2.new(0, 132, 0, 45)
         TextButton_6.Font = Enum.Font.Code
-        TextButton_6.Text = "Club"
+        TextButton_6.Text = "Klub"
         TextButton_6.TextColor3 = Color3.fromRGB(220, 220, 220)
         TextButton_6.TextSize = 14.000
 
@@ -1432,7 +1432,7 @@ if game.PlaceId == 2788229376 then
         Username_2.Position = UDim2.new(0.0177452099, 0, 0.15242745, 0)
         Username_2.Size = UDim2.new(0, 335, 0, 21)
         Username_2.Font = Enum.Font.Code
-        Username_2.Text = "Commands"
+        Username_2.Text = "CMDS"
         Username_2.TextColor3 = Color3.fromRGB(220, 220, 220)
         Username_2.TextSize = 18.000
         Username_2.TextWrapped = true
@@ -1642,7 +1642,7 @@ if game.PlaceId == 2788229376 then
         Rank_16.Position = UDim2.new(0.511275709, 0, 0.365445167, 0)
         Rank_16.Size = UDim2.new(0, 390, 0, 21)
         Rank_16.Font = Enum.Font.Code
-        Rank_16.Text = "crash (REQUIRES A DECENT PC)"
+        Rank_16.Text = "crash (you need a good pc)"
         Rank_16.TextColor3 = Color3.fromRGB(220, 220, 220)
         Rank_16.TextSize = 18.000
         Rank_16.TextWrapped = true
@@ -1678,7 +1678,7 @@ if game.PlaceId == 2788229376 then
         Rank_17.Size = UDim2.new(0, 513, 0, 226)
         Rank_17.Font = Enum.Font.Code
         Rank_17.Text =
-            "This script has been made by Kay xox"
+            "This script has been made by the incognito and lil_Squeasy."
         Rank_17.TextColor3 = Color3.fromRGB(220, 220, 220)
         Rank_17.TextSize = 18.000
         Rank_17.TextWrapped = true
@@ -1714,7 +1714,7 @@ if game.PlaceId == 2788229376 then
         Rank_18.Position = UDim2.new(0.133086875, 0, 0.362486631, 0)
         Rank_18.Size = UDim2.new(0, 391, 0, 92)
         Rank_18.Font = Enum.Font.Code
-        Rank_18.Text = "SOON!"
+        Rank_18.Text = "COMING SOON!"
         Rank_18.TextColor3 = Color3.fromRGB(220, 220, 220)
         Rank_18.TextSize = 18.000
         Rank_18.TextWrapped = true
@@ -1734,7 +1734,7 @@ if game.PlaceId == 2788229376 then
         Title_2.Position = UDim2.new(0.0177452099, 0, 0.15242745, 0)
         Title_2.Size = UDim2.new(0, 335, 0, 21)
         Title_2.Font = Enum.Font.Code
-        Title_2.Text = "Search accounts"
+        Title_2.Text = "Search"
         Title_2.TextColor3 = Color3.fromRGB(220, 220, 220)
         Title_2.TextSize = 18.000
         Title_2.TextWrapped = true
@@ -1827,7 +1827,7 @@ if game.PlaceId == 2788229376 then
         Title_3.Position = UDim2.new(0.123752303, 0, 0.0177514795, 0)
         Title_3.Size = UDim2.new(0, 153, 0, 21)
         Title_3.Font = Enum.Font.Code
-        Title_3.Text = "Kay's GUI V1"
+        Title_3.Text = "0110's Controll Guii V1"
         Title_3.TextColor3 = Color3.fromRGB(220, 220, 220)
         Title_3.TextSize = 14.000
         Title_3.TextWrapped = true
@@ -2001,7 +2001,7 @@ if game.PlaceId == 2788229376 then
 
             while wait(5) do
                 
-                text.Text = "- Nothing much"
+                text.Text = "- Nothing much just released the script"
             end
         end
         coroutine.wrap(YQCCP_fake_script)()
@@ -2173,7 +2173,7 @@ if game.PlaceId == 2788229376 then
 
                 fuckkk.Image = content
 
-                usname.Text = "Username: " .. tostring(aaakakakkakaka)
+                usname.Text = "User: " .. tostring(aaakakakkakaka)
                 cash.Text = "Money: " .. game:GetService("Players")[tostring(aaakakakkakaka)].DataFolder.Currency.Value
                 wanted.Text = "Wanted: " ..
                                   game:GetService("Players")[tostring(aaakakakkakaka)].DataFolder.Information.Wanted
@@ -2268,7 +2268,7 @@ if game.PlaceId == 2788229376 then
             local timeEnd = tick() - timeBegan
             local timeMS = math.floor(timeEnd * 1000)
 
-            local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+            local decalsyeeted = true -- Makes game look shit but boosts fps by 20.
             local g = game
             local w = g.Workspace
             local l = g.Lighting
@@ -2307,7 +2307,7 @@ if game.PlaceId == 2788229376 then
                 end
             end
 
-            local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+            local decalsyeeted = true -- Makes game look shit but boosts fps by 20.
             local g = game
             local w = g.Workspace
             local l = g.Lighting
@@ -2391,7 +2391,7 @@ if game.PlaceId == 2788229376 then
             TextLabel.Position = UDim2.new(0.379002213, 0, 0.0237247907, 0)
             TextLabel.Size = UDim2.new(0, 325, 0, 54)
             TextLabel.Font = Enum.Font.Code
-            TextLabel.Text = "Kay's V1"
+            TextLabel.Text = "Bedrock's Controll v1"
             TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
             TextLabel.TextScaled = true
             TextLabel.TextSize = 14.000
@@ -2566,5 +2566,5 @@ if game.PlaceId == 2788229376 then
     end
 
 else
-    game.Players.LocalPlayer:Kick("Only da hood.")
+    game.Players.LocalPlayer:Kick("Only FOR da hood.")
 end
