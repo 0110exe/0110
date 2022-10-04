@@ -1,17 +1,4 @@
 
-getgenv().Settings = {
-    Host = 123456789,
-    Prefix = "/",
-    AdMsg = "0110 alt ctrl!",
-    FPS = 10
-}
-
-getgenv().Alts = {
-    123456789,
-    123456789,
-    123456789,
-}
-
 if not game:IsLoaded() then
 	game.Loaded:Wait()
 end
