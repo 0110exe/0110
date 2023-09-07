@@ -1,0 +1,349 @@
+local LibraryURL = "https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/"
+local LibraryLoader = loadstring(game:HttpGet(LibraryURL .. "Library.lua"))()
+local ThemeManager = loadstring(game:HttpGet(LibraryURL .. "addons/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet(LibraryURL .. "addons/SaveManager.lua"))()
+
+local function createSound(soundId)
+    local sound = Instance.new("Sound", game.Workspace)
+    sound.SoundId = soundId
+    sound.Loaded:wait()
+    return sound
+end
+
+local Sound1 = createSound("rbxassetid://5226834046")
+local Sound2 = createSound("rbxassetid://1905367471")
+
+local config = {
+    KeyCode = Enum.KeyCode.Q,
+    Prediction = 1.36,
+    Tracer = false,
+    TracerBugged = false,
+    LookAt = false,
+    PartName = "LowerTorso",
+    NotifyEnabled = false,
+    BlindStrafe = false,
+    ViewPlayer = false,
+    NotificationSound = false,
+    ScriptEnabled = false,
+    AirshotFunction = false,
+    AirshotPart = "LowerTorso",
+    FRAME = Vector3.new(0, 20, 0),
+}
+
+local UI = Instance.new("Folder", game.CoreGui)
+local Camera = game:GetService("Workspace").CurrentCamera
+local Mouse = game.Players.LocalPlayer:GetMouse()
+local Toggle = false
+local CameraService = game:GetService("Workspace").CurrentCamera
+local GuiService = game:GetService("GuiService")
+local GuiInset = GuiService.GetGuiInset
+local PlayerService = game:GetService("Players").LocalPlayer
+local Mouse2 = PlayerService:GetMouse()
+
+local Line = Drawing.new("Line")
+Line.Visible = false
+Line.Color = Color3.fromRGB(13, 17, 214)
+Line.Thickness = 1
+Line.Transparency = 1
+
+local InputService = game:GetService("UserInputService")
+
+InputService.InputBegan:Connect(function(Input, GameProcessed)
+    if not GameProcessed and Input.KeyCode == config.KeyCode then
+        if config.ScriptEnabled then
+            Toggle = not Toggle
+            if Toggle then
+                TargetPlayer = getClosestPlayerToCursor()
+                if config.ViewPlayer then
+                    game.Workspace.CurrentCamera.CameraSubject = TargetPlayer.Character
+                end
+                if config.NotificationSound then
+                    Sound1:Play()
+                end
+                if config.NotifyEnabled then
+                    LibraryLoader.Notify(": " .. TargetPlayer.Character.Humanoid.DisplayName)
+                end
+            else
+                if config.ViewPlayer then
+                    game.Workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character
+                end
+                if config.NotificationSound then
+                    Sound2:Play()
+                end
+                if config.NotifyEnabled then
+                    LibraryLoader.Notify("unlock")
+                end
+            end
+        end
+    end
+end)
+
+function getClosestPlayerToCursor()
+    local ClosestPlayer
+    local ClosestDistance = 137
+    for _, Player in pairs(game.Players:GetPlayers()) do
+        if Player ~= game.Players.LocalPlayer and Player.Character and Player.Character:FindFirstChild("Humanoid")
+            and Player.Character.Humanoid.Health ~= 0 and Player.Character:FindFirstChild(config.PartName) then
+            local PlayerPos = Camera:WorldToViewportPoint(Player.Character.PrimaryPart.Position)
+            local Distance = (Vector2.new(PlayerPos.X, PlayerPos.Y) - Vector2.new(Mouse2.X, Mouse2.Y)).magnitude
+            if Distance < ClosestDistance then
+                ClosestPlayer = Player
+                ClosestDistance = Distance
+            end
+        end
+    end
+    return ClosestPlayer
+end
+
+local Metatable = getrawmetatable(game)
+local OriginalNamecall = Metatable.__namecall
+setreadonly(Metatable, false)
+Metatable.__namecall = newcclosure(function(...)
+    local Arguments = {...}
+    if Toggle and getnamecallmethod() == "FireServer" and Arguments[2] == "UpdateMousePos" then
+        Arguments[3] = TargetPlayer.Character[config.PartName].Position + (TargetPlayer.Character[config.PartName].Velocity * config.Prediction / 10)
+        return OriginalNamecall(unpack(Arguments))
+    end
+    return OriginalNamecall(...)
+end)
+
+-- Function to update prediction based on ping
+local function Predictionn()
+    if config.autosetup then
+        local DataPing = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+        local PingValues = string.split(DataPing, " ")
+        local Ping = tonumber(PingValues[1])
+        
+        if Ping < 30 then
+            config.Prediction = 1.14
+        elseif Ping <= 30 then
+            if Ping < 40 then
+                config.Prediction = 1.16
+            elseif Ping <= 40 then
+                if Ping < 50 then
+                    config.Prediction = 1.19
+                elseif Ping <= 50 then
+                    if Ping < 70 then
+                        config.Prediction = 1.22
+                    elseif Ping <= 80 then
+                        config.Prediction = 1.38
+                    elseif Ping <= 80 then
+                        config.Prediction = 1.39
+                    elseif Ping <= 90 then
+                        config.Prediction = 1.42
+                    elseif Ping <= 150 then
+                        config.Prediction = 1.51
+                    elseif Ping >= 200 then
+                        config.Prediction = 1.69
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function Airshot()
+    if config.AirshotFunction then
+        if TargetPlayer.Character.Humanoid.Jump == true and TargetPlayer.Character.Humanoid.FloorMaterial == Enum.Material.Air then
+            config.PartName = config.AirshotPart
+        else
+            TargetPlayer.Character:WaitForChild("Humanoid").StateChanged:Connect(function(State, Type)
+                if Type == Enum.HumanoidStateType.Freefall then
+                    config.PartName = config.AirshotPart
+                else
+                    config.PartName = "LowerTorso"
+                end
+            end)
+        end
+    end
+end
+
+local function Strafe()
+    if config.BlindStrafe and Toggle and config.ScriptEnabled then
+        local targetPosition = TargetPlayer.Character.HumanoidRootPart.Position + config.FRAME
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+    end
+end
+
+local function LookAt()
+    if config.LookAt and Toggle and config.ScriptEnabled then
+        local localCharacter = game.Players.LocalPlayer.Character
+        local localPrimaryPart = localCharacter.PrimaryPart
+        local targetCharacter = TargetPlayer.Character
+        local targetRootPart = targetCharacter.HumanoidRootPart
+        local newCFrame = CFrame.new(localPrimaryPart.Position, Vector3.new(targetRootPart.Position.X, targetRootPart.Position.Y, targetRootPart.Position.Z))
+        localCharacter:SetPrimaryPartCFrame(newCFrame)
+    end
+end
+
+local function balls()
+    if config.Tracer == true and Toggle then
+        local targetPart = TargetPlayer.Character[config.PartName]
+        local targetPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position + (targetPart.Velocity * config.Prediction / 10))
+        
+        Line.Visible = true
+        Line.From = Vector2.new(Mouse2.X, Mouse2.Y + GuiInset(GuiService).Y)
+        Line.To = Vector2.new(targetPos.X, targetPos.Y)
+    elseif config.Tracer == false then
+        Line.Visible = false
+    end
+    
+    if Line.Visible == true and not Toggle and config.ScriptEnabled then
+        config.TracerBugged = true
+        Line.Visible = false
+    end
+    
+    if config.Tracer == true and config.TracerBugged and Toggle then
+        Line.Visible = true
+    end
+end
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    Predictionn()
+    Airshot()
+    Strafe()
+    LookAt()
+    balls()
+end)
+
+
+local Library2 = loadstring(game:HttpGet("https://raw.githubusercontent.com/matas3535/PoopLibrary/main/Library.lua"))()
+
+local UI2 = Library2:New({ Name = "Shinji this has a working target aim in it", Accent = Color3.fromRGB(255, 0, 0) })
+local AimingPage = UI2:Page({ Name = "Aiming" })
+
+local function createToggle2(section, name, default, pointer, callback)
+    section:Toggle({
+        Name = name,
+        Default = default,
+        Pointer = pointer,
+        callback = callback
+    })
+end
+
+local TargetbotSection = AimingPage:Section({ Name = "Targetbot", Side = "Left" })
+
+createToggle2(TargetbotSection, "Enabled", false, "TargetBotMain_Enabled", function(Value)
+    config.ScriptEnabled = Value
+end)
+
+createToggle2(TargetbotSection, "Notifications", false, "TargetBotMain_Enabled", function(Value)
+    config.NotifyEnabled = Value
+end)
+
+createToggle2(TargetbotSection, "Notifications Sound", false, "TargetBotMain_Enabled", function(Value)
+    config.NotificationSound = Value
+end)
+
+createToggle2(TargetbotSection, "LookAt", false, "TargetBotMain_Enabled", function(Value)
+    config.LookAt = Value
+end)
+
+createToggle2(TargetbotSection, "Spectate Mode", false, "TargetBotMain_Enabled", function(Value)
+    config.ViewPlayer = Value
+end)
+
+createToggle2(TargetbotSection, "TracerShow", false, "TargetBotMain_Enabled", function(Value)
+    config.Tracer = Value
+end)
+
+createToggle2(TargetbotSection, "Airtap Func", false, "TargetBotMain_Enabled", function(Value)
+    config.AirshotFunction = Value
+end)
+
+createToggle2(TargetbotSection, "AirStrafe", false, "TargetBotMain_Enabled", function(Value)
+    config.BlindStrafe = Value
+end)
+
+TargetbotSection:Slider({
+    Name = "Prediction",
+    Minimum = 1,
+    Maximum = 4,
+    Default = 1.55,
+    Decimals = 0.1,
+    Pointer = "Prediction"
+})
+
+TargetbotSection:Slider({
+    Name = "Air Strafe Distance",
+    Minimum = 1,
+    Maximum = 40,
+    Default = 10,
+    Decimals = 0.1,
+    Pointer = "Prediction",
+    callback = function(Value)
+        config.FRAME = Vector3.new(0, Value, 0)
+    end
+})
+
+TargetbotSection:Slider({
+    Name = "Tracer Thickness",
+    Minimum = 1,
+    Maximum = 10,
+    Default = 2,
+    Decimals = 0.1,
+    Pointer = "Prediction",
+    callback = function(Value)
+        Line.Thickness = Value
+    end
+})
+
+createToggle2(AimingPage:Section({ Name = "Other Related Stuff", Side = "Right" }), "Rainbow Tracer", false, "OthersMain_Enabled")
+createToggle2(AimingPage:Section({ Name = "Other Related Stuff", Side = "Right" }), "Random Hitpart", false, "OthersMain_Enabled")
+createToggle2(AimingPage:Section({ Name = "Other Related Stuff", Side = "Right" }), "Target Stats", false, "OthersMain_Enabled")
+createToggle2(AimingPage:Section({ Name = "Other Related Stuff", Side = "Right" }), "Target Strafe", false, "OthersMain_Enabled")
+
+AimingPage:Section({ Name = "Other Related Stuff", Side = "Right" }):Slider({
+    Name = "TargetStrafe Distance",
+    Minimum = 1,
+    Maximum = 40,
+    Default = 10,
+    Decimals = 0.1,
+    Pointer = "Prediction"
+})
+
+createToggle2(AimingPage:Section({ Name = "Other Related Stuff", Side = "Right" }), "Gun TP", false, "OthersMain_Enabled")
+
+local BulletPrioritySection = AimingPage:Section({ Name = "Bullet-Prioritys", Side = "Right" })
+
+createToggle2(BulletPrioritySection, "Enabled", false, "OthersMain_Enabled")
+createToggle2(BulletPrioritySection, "Draw Field Of View", false, "OthersMain_Enabled")
+createToggle2(BulletPrioritySection, "Fill", false, "OthersMain_Enabled")
+
+local AimbotSection = AimingPage:Section({ Name = "Aimbot", Side = "Left" })
+
+createToggle2(AimbotSection, "Enabled", false, "OthersMain_Enabled")
+createToggle2(AimbotSection, "Ping Based", false, "OthersMain_Enabled")
+createToggle2(AimbotSection, "Smoothness", false, "OthersMain_Enabled")
+createToggle2(AimbotSection, "Smoothness", false, "OthersMain_Enabled")
+
+AimbotSection:Slider({
+    Name = "Prediction",
+    Minimum = 1,
+    Maximum = 4,
+    Default = 1.55,
+    Decimals = 0.1,
+    Pointer = "Prediction"
+})
+
+AimbotSection:Slider({
+    Name = "Smoothness",
+    Minimum = 1,
+    Maximum = 10,
+    Default = 5,
+    Decimals = 0.1,
+    Pointer = "Prediction"
+})
+
+AimbotSection:Dropdown({
+    Name = "AimPoint",
+    Options = { "Head", "LowerTorso", "UpperTorso" },
+    Default = "Head",
+    Pointer = "AimbotExtra_Type"
+})
+
+local TriggerbotSection = AimingPage:Section({ Name = "TriggerBot", Side = "Right" })
+
+createToggle2(TriggerbotSection, "Enabled", false, "OthersMain_Enabled")
+
+UI2:Initialize()
